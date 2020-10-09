@@ -56,7 +56,7 @@ const COMPATIBLE_COLORS = [
   },
 ];
 
-export const THOUGHT_COLORS = [
+const THOUGHT_COLORS = [
   {
     colorName: 'Yellow',
     hexCode: '#ECD078',

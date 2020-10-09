@@ -1,20 +1,25 @@
 import React, { useEffect, useState } from 'react';
-import { FlatList, StyleSheet } from 'react-native';
+import { FlatList, StyleSheet, RefreshControl } from 'react-native';
 import PalettePreview from '../components/PalettePreview';
 
 const Home = ({ navigation }) => {
   const [palettes, setPalettes] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
-  async function fetchPalettes() {
-    console.log('here');
-    const response = await fetch('/api/palettes');
-    console.log(response);
-    if (response.ok) {
-      const data = await response.json();
-      console.log(data);
-      setPalettes(data);
+  const fetchPalettes = async () => {
+    setIsLoading(true);
+
+    try {
+      const response = await fetch('/api/palettes');
+      console.log(response);
+      if (response.ok) {
+        const data = await response.json();
+        setPalettes(data);
+      }
+    } finally {
+      setIsLoading(false);
     }
-  }
+  };
 
   useEffect(() => {
     fetchPalettes();
@@ -33,6 +38,8 @@ const Home = ({ navigation }) => {
           palette={item}
         />
       )}
+      refreshing={isLoading}
+      onRefresh={fetchPalettes}
     />
   );
 };

@@ -14,7 +14,9 @@ const ColorPalette = ({ route }) => {
       renderItem={({ item }) => (
         <ColorBox colorName={item.colorName} colorHex={item.hexCode} />
       )}
-      ListHeaderComponent={<Text style={styles.text}>{paletteName}</Text>}
+      ListHeaderComponent={
+        <Text style={styles.text}>{paletteName} pallete</Text>
+      }
     />
   );
 };

@@ -7,12 +7,14 @@ import { createLocalServer } from './server/server';
 
 const Stack = createStackNavigator();
 
-if (window.server) {
-  window.server.shutdown();
-}
-window.server = createLocalServer();
+const startLocalServer = () => {
+  if (window.server) {
+    window.server.shutdown();
+  }
+  window.server = createLocalServer();
+};
 
-console.log('tadam');
+startLocalServer();
 
 const App = () => {
   return (

@@ -4,7 +4,9 @@ import { COLOR_PALETTES } from './data/colors';
 export const createLocalServer = () => {
   return createServer({
     routes() {
-      this.get('/api/palettes', () => JSON.stringify(COLOR_PALETTES));
+      this.get('/api/palettes', () => JSON.stringify(COLOR_PALETTES), {
+        timing: 700,
+      });
     },
   });
 };
