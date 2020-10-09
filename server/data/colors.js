@@ -33,8 +33,56 @@ const FEM_COLORS = [
   { colorName: 'Orange', hexCode: '#e66225' },
 ];
 
+const COMPATIBLE_COLORS = [
+  {
+    colorName: 'Teal',
+    hexCode: '#3FB8AF',
+  },
+  {
+    colorName: 'Light teal',
+    hexCode: '#7FC7AF',
+  },
+  {
+    colorName: 'Yellow',
+    hexCode: '#DAD8A7',
+  },
+  {
+    colorName: 'Pink',
+    hexCode: '#FF9E9D',
+  },
+  {
+    colorName: 'Dark Pink',
+    hexCode: '#FF3D7F',
+  },
+];
+
+export const THOUGHT_COLORS = [
+  {
+    colorName: 'Yellow',
+    hexCode: '#ECD078',
+  },
+  {
+    colorName: 'Orange',
+    hexCode: '#D95B43',
+  },
+  {
+    colorName: 'Red',
+    hexCode: '#C02942',
+  },
+  {
+    colorName: 'Crimson',
+    hexCode: '#542437',
+  },
+  {
+    colorName: 'Clay',
+    hexCode: '#53777A',
+  },
+];
+
 export const COLOR_PALETTES = [
   { paletteName: 'Solarized', colors: SOLARIZED_COLORS },
   { paletteName: 'Rainbow', colors: RAINBOW_COLORS },
   { paletteName: 'FEM', colors: FEM_COLORS },
+  { paletteName: 'Compatible', colors: COMPATIBLE_COLORS },
+  { paletteName: 'Thought provoking', colors: THOUGHT_COLORS },
 ];

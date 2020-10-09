@@ -3,8 +3,16 @@ import Home from './screens/Home';
 import ColorPalette from './screens/ColorPalette';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
+import { createLocalServer } from './server/server';
 
 const Stack = createStackNavigator();
+
+if (window.server) {
+  window.server.shutdown();
+}
+window.server = createLocalServer();
+
+console.log('tadam');
 
 const App = () => {
   return (
