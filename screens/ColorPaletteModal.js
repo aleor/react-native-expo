@@ -1,9 +1,19 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, Alert } from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  StyleSheet,
+  Alert,
+  Switch,
+  FlatList,
+} from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { WEB_COLORS } from '../const/webColors';
 
 const ColorPaletteModal = ({ navigation }) => {
   const [name, setName] = useState('');
+  const [selectedColors, setSelectedColors] = useState([]);
 
   const handleSubmit = () => {
     if (!name || !name.trim().length) {
@@ -11,12 +21,27 @@ const ColorPaletteModal = ({ navigation }) => {
       return;
     }
 
+    if (selectedColors.length < 3) {
+      Alert.alert('Please select at least 3 colors');
+      return;
+    }
+
     const newPalette = {
       paletteName: name,
-      colors: [],
+      colors: selectedColors,
     };
 
     navigation.navigate('Home', { newPalette });
+  };
+
+  const handleSelectionChange = (value, color) => {
+    if (value) {
+      setSelectedColors((colors) => [...colors, color]);
+    } else {
+      setSelectedColors((colors) => [
+        colors.filter((c) => c.colorName !== color.colorName),
+      ]);
+    }
   };
 
   return (
@@ -28,6 +53,23 @@ const ColorPaletteModal = ({ navigation }) => {
         placeholder="Palette name"
         clearButtonMode="while-editing"
         onChangeText={setName}
+      />
+      <FlatList
+        data={WEB_COLORS}
+        keyExtractor={(i) => i.colorName}
+        renderItem={({ item }) => (
+          <View style={styles.switch}>
+            <Text>{item.colorName}</Text>
+            <Switch
+              value={
+                !!selectedColors.find((c) => c.colorName === item.colorName)
+              }
+              onValueChange={(selected) => {
+                handleSelectionChange(selected, item);
+              }}
+            />
+          </View>
+        )}
       />
       <TouchableOpacity style={styles.button} onPress={handleSubmit}>
         <Text style={styles.buttonText}>Submit</Text>
@@ -42,7 +84,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 10,
     borderRadius: 5,
-    marginBottom: 50,
+    marginBottom: 25,
   },
   container: {
     flex: 1,
@@ -62,6 +104,14 @@ const styles = StyleSheet.create({
   },
   name: {
     marginBottom: 10,
+  },
+  switch: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: 'gray',
   },
 });
 
