@@ -1,4 +1,4 @@
-export const COLORS = [
+export const SOLARIZED_COLORS = [
   { colorName: 'Base03', hexCode: '#002b36' },
   { colorName: 'Base02', hexCode: '#073642' },
   { colorName: 'Base01', hexCode: '#586e75' },

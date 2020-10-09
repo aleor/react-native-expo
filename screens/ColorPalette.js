@@ -1,22 +1,21 @@
 import React from 'react';
 import ColorBox from '../components/ColorBox';
-import { COLORS } from '../const/colors';
 import { Text, SafeAreaView, StyleSheet, FlatList } from 'react-native';
 
-const ColorPalette = () => {
+const ColorPalette = ({ route }) => {
+  const { colors, paletteName } = route.params;
+
   return (
-    <SafeAreaView style={[styles.safeArea]}>
-      <FlatList
-        showsVerticalScrollIndicator={false}
-        style={styles.pt10}
-        data={COLORS}
-        keyExtractor={(item) => item.colorName}
-        renderItem={({ item }) => (
-          <ColorBox colorName={item.colorName} colorHex={item.hexCode} />
-        )}
-        ListHeaderComponent={<Text>Solarized</Text>}
-      />
-    </SafeAreaView>
+    <FlatList
+      showsVerticalScrollIndicator={false}
+      style={styles.container}
+      data={colors}
+      keyExtractor={(item) => item.colorName}
+      renderItem={({ item }) => (
+        <ColorBox colorName={item.colorName} colorHex={item.hexCode} />
+      )}
+      ListHeaderComponent={<Text style={styles.text}>{paletteName}</Text>}
+    />
   );
 };
 
@@ -24,19 +23,12 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 18,
     fontWeight: 'bold',
-  },
-  safeArea: {
-    flex: 1,
-    marginHorizontal: 20,
+    marginBottom: 10,
   },
   container: {
-    flex: 0.07,
-    marginVertical: 5,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  pt10: {
+    paddingHorizontal: 10,
     paddingTop: 10,
+    backgroundColor: 'white',
   },
 });
 

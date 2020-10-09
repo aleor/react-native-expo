@@ -1,5 +1,4 @@
 import React from 'react';
-import { Text, View, SafeAreaView, StyleSheet, FlatList } from 'react-native';
 import Home from './screens/Home';
 import ColorPalette from './screens/ColorPalette';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -12,7 +11,11 @@ const App = () => {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen name="Home" component={Home} />
-        <Stack.Screen name="ColorPalette" component={ColorPalette} />
+        <Stack.Screen
+          name="ColorPalette"
+          component={ColorPalette}
+          options={({ route }) => ({ title: route.params.paletteName })}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
