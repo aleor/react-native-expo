@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { FlatList, StyleSheet, RefreshControl } from 'react-native';
+import { FlatList, StyleSheet, Text } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import PalettePreview from '../components/PalettePreview';
 
-const Home = ({ navigation }) => {
+const Home = ({ navigation, route }) => {
+  const newPalette = route.params ? route.params.newPalette : undefined;
+
   const [palettes, setPalettes] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -25,6 +28,12 @@ const Home = ({ navigation }) => {
     fetchPalettes();
   }, []);
 
+  useEffect(() => {
+    if (newPalette) {
+      setPalettes((palletes) => [newPalette, ...palletes]);
+    }
+  }, [newPalette]);
+
   return (
     <FlatList
       style={styles.list}
@@ -40,6 +49,13 @@ const Home = ({ navigation }) => {
       )}
       refreshing={isLoading}
       onRefresh={fetchPalettes}
+      ListHeaderComponent={
+        <TouchableOpacity
+          onPress={() => navigation.navigate('ColorPaletteModal')}
+        >
+          <Text style={styles.buttonText}>Add new color scheme</Text>
+        </TouchableOpacity>
+      }
     />
   );
 };
@@ -48,6 +64,12 @@ const styles = StyleSheet.create({
   list: {
     padding: 10,
     backgroundColor: 'white',
+  },
+  buttonText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: 'teal',
+    marginBottom: 15,
   },
 });
 

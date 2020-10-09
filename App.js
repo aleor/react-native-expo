@@ -1,11 +1,12 @@
 import React from 'react';
-import Home from './screens/Home';
-import ColorPalette from './screens/ColorPalette';
+
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import { createLocalServer } from './server/server';
+import MainStackLayer from './screens/MainStack';
+import ColorPaletteModal from './screens/ColorPaletteModal';
 
-const Stack = createStackNavigator();
+const RootStack = createStackNavigator();
 
 const startLocalServer = () => {
   if (window.server) {
@@ -19,14 +20,17 @@ startLocalServer();
 const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="Home" component={Home} />
-        <Stack.Screen
-          name="ColorPalette"
-          component={ColorPalette}
-          options={({ route }) => ({ title: route.params.paletteName })}
+      <RootStack.Navigator mode="modal">
+        <RootStack.Screen
+          name="Main"
+          component={MainStackLayer}
+          options={{ headerShown: false }}
         />
-      </Stack.Navigator>
+        <RootStack.Screen
+          name="ColorPaletteModal"
+          component={ColorPaletteModal}
+        />
+      </RootStack.Navigator>
     </NavigationContainer>
   );
 };
