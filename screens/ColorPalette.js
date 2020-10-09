@@ -1,6 +1,6 @@
 import React from 'react';
 import ColorBox from '../components/ColorBox';
-import { Text, SafeAreaView, StyleSheet, FlatList } from 'react-native';
+import { Text, StyleSheet, FlatList } from 'react-native';
 
 const ColorPalette = ({ route }) => {
   const { colors, paletteName } = route.params;
