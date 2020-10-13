@@ -1,32 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { FlatList, StyleSheet, Text } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import PalettePreview from '../components/PalettePreview';
+import useFetch from '../hooks/useFetch';
 
 const Home = ({ navigation, route }) => {
   const newPalette = route.params ? route.params.newPalette : undefined;
 
-  const [palettes, setPalettes] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-
-  const fetchPalettes = async () => {
-    setIsLoading(true);
-
-    try {
-      const response = await fetch('/api/palettes');
-      console.log(response);
-      if (response.ok) {
-        const data = await response.json();
-        setPalettes(data);
-      }
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchPalettes();
-  }, []);
+  const [palettes, isLoading, error, refresh] = useFetch('/api/palettes');
 
   useEffect(() => {
     if (newPalette) {
@@ -41,20 +22,22 @@ const Home = ({ navigation, route }) => {
       keyExtractor={(item) => item.paletteName}
       renderItem={({ item }) => (
         <PalettePreview
-          handlePress={() => {
-            navigation.navigate('ColorPalette', item);
-          }}
+          handlePress={() => navigation.navigate('ColorPalette', item)}
           palette={item}
         />
       )}
       refreshing={isLoading}
-      onRefresh={fetchPalettes}
+      onRefresh={() => refresh()}
       ListHeaderComponent={
-        <TouchableOpacity
-          onPress={() => navigation.navigate('ColorPaletteModal')}
-        >
-          <Text style={styles.buttonText}>Add new color scheme</Text>
-        </TouchableOpacity>
+        isLoading ? (
+          <></>
+        ) : (
+          <TouchableOpacity
+            onPress={() => navigation.navigate('ColorPaletteModal')}
+          >
+            <Text style={styles.buttonText}>Add new color scheme</Text>
+          </TouchableOpacity>
+        )
       }
     />
   );
