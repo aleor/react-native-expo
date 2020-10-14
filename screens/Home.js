@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { Button, FlatList, StyleSheet, Text, View } from 'react-native';
 import PalettePreview from '../components/PalettePreview';
 import useFetch from '../hooks/useFetch';
@@ -8,14 +8,14 @@ const Home = ({ navigation, route }) => {
   const newPalette = route.params ? route.params.newPalette : undefined;
 
   const [data, isLoading, error, refresh] = useFetch('/api/palettes');
+
   const [palettes, setPalettes] = useState([]);
   // alternative: or via custom hook with reducer
   // const [palettes, isLoading, error, refresh] = useFetch_withReducer('/api/palettes');
 
   useEffect(() => {
     setPalettes(data);
-  }),
-    [data];
+  }, [data]);
 
   useEffect(() => {
     if (newPalette) {

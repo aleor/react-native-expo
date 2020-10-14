@@ -26,7 +26,7 @@ const useFetch = (url) => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [url]);
 
   const refresh = () => fetchData();
 
