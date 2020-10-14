@@ -28,9 +28,7 @@ const useFetch = (url) => {
     fetchData();
   }, []);
 
-  const refresh = () => {
-    fetchData();
-  };
+  const refresh = () => fetchData();
 
   return [data, isLoading, error, refresh];
 };
