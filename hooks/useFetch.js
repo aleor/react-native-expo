@@ -5,21 +5,23 @@ const useFetch = (url) => {
   const [isLoading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const fetchData = () => {
+  const fetchData = async () => {
     setLoading(true);
     setData(null);
     setError(null);
 
-    fetch(url)
-      .then((response) => response.json())
-      .then(setData)
-      .catch((error) => {
-        setError(error);
-        console.error(error);
-      })
-      .then(() => {
-        setLoading(false);
-      });
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error(`${response.status}: ${response.statusText}`);
+      }
+      setData(await response.json());
+    } catch {
+      setError(error);
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {

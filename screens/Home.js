@@ -15,7 +15,9 @@ const Home = ({ navigation, route }) => {
     }
   }, [newPalette]);
 
-  return (
+  return error ? (
+    <Text>An error on fetching data: {error}</Text>
+  ) : (
     <FlatList
       style={styles.list}
       data={palettes}
