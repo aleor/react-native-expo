@@ -7,8 +7,8 @@ import {
   Alert,
   Switch,
   FlatList,
+  Button,
 } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import { WEB_COLORS } from '../const/webColors';
 
 const ColorPaletteModal = ({ navigation }) => {
@@ -71,9 +71,7 @@ const ColorPaletteModal = ({ navigation }) => {
           </View>
         )}
       />
-      <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-        <Text style={styles.buttonText}>Submit</Text>
-      </TouchableOpacity>
+      <Button title="Submit" color="teal" onPress={handleSubmit} />
     </View>
   );
 };
@@ -90,17 +88,6 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 10,
     backgroundColor: 'white',
-  },
-  button: {
-    height: 40,
-    backgroundColor: 'teal',
-    borderRadius: 5,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  buttonText: {
-    color: 'white',
-    fontWeight: 'bold',
   },
   name: {
     marginBottom: 10,

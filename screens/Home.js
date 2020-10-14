@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react';
-import { FlatList, StyleSheet, Text } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import React, { useEffect, useState } from 'react';
+import { Button, FlatList, StyleSheet, Text, View } from 'react-native';
 import PalettePreview from '../components/PalettePreview';
 import useFetch from '../hooks/useFetch';
 import useFetch_withReducer from '../hooks/useFetch_withReducer';
@@ -8,9 +7,15 @@ import useFetch_withReducer from '../hooks/useFetch_withReducer';
 const Home = ({ navigation, route }) => {
   const newPalette = route.params ? route.params.newPalette : undefined;
 
-  const [palettes, isLoading, error, refresh] = useFetch('/api/palettes');
+  const [data, isLoading, error, refresh] = useFetch('/api/palettes');
+  const [palettes, setPalettes] = useState([]);
   // alternative: or via custom hook with reducer
   // const [palettes, isLoading, error, refresh] = useFetch_withReducer('/api/palettes');
+
+  useEffect(() => {
+    setPalettes(data);
+  }),
+    [data];
 
   useEffect(() => {
     if (newPalette) {
@@ -37,11 +42,13 @@ const Home = ({ navigation, route }) => {
         isLoading ? (
           <></>
         ) : (
-          <TouchableOpacity
-            onPress={() => navigation.navigate('ColorPaletteModal')}
-          >
-            <Text style={styles.buttonText}>Add new color scheme</Text>
-          </TouchableOpacity>
+          <View style={{ paddingBottom: 15 }}>
+            <Button
+              onPress={() => navigation.navigate('ColorPaletteModal')}
+              color="teal"
+              title="Add new color scheme"
+            />
+          </View>
         )
       }
     />
@@ -52,12 +59,6 @@ const styles = StyleSheet.create({
   list: {
     padding: 10,
     backgroundColor: 'white',
-  },
-  buttonText: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: 'teal',
-    marginBottom: 15,
   },
 });
 
