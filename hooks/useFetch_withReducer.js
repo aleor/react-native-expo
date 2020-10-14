@@ -26,7 +26,7 @@ const useFetch_withReducer = (url) => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [url]);
 
   const refresh = () => fetchData();
 

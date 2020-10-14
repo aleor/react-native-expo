@@ -7,9 +7,8 @@ import useFetch_withReducer from '../hooks/useFetch_withReducer';
 const Home = ({ navigation, route }) => {
   const newPalette = route.params ? route.params.newPalette : undefined;
 
-  const [data, isLoading, error, refresh] = useFetch('/api/palettes');
-
   const [palettes, setPalettes] = useState([]);
+  const [data, isLoading, error, refresh] = useFetch('/api/palettes');
   // alternative: or via custom hook with reducer
   // const [palettes, isLoading, error, refresh] = useFetch_withReducer('/api/palettes');
 
