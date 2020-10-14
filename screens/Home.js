@@ -9,7 +9,7 @@ const Home = ({ navigation, route }) => {
 
   const [palettes, setPalettes] = useState([]);
   const [data, isLoading, error, refresh] = useFetch('/api/palettes');
-  // alternative: or via custom hook with reducer
+  // alternatively: via custom hook with reducer
   // const [palettes, isLoading, error, refresh] = useFetch_withReducer('/api/palettes');
 
   useEffect(() => {

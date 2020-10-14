@@ -19,3 +19,5 @@ const useLoggingReducer = (reducer, initialState) => {
 
   return [state, decoratedDispatch];
 };
+
+export default useLoggingReducer;

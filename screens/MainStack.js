@@ -10,7 +10,11 @@ const MainStack = createStackNavigator();
 const MainStackLayer = () => {
   return (
     <MainStack.Navigator>
-      <MainStack.Screen name="Home" component={Home} />
+      <MainStack.Screen
+        name="Home"
+        component={Home}
+        options={{ title: 'Palettes' }}
+      />
       <MainStack.Screen
         name="ColorPalette"
         component={ColorPalette}
