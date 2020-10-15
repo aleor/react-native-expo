@@ -1,5 +1,5 @@
 import { useReducer, useEffect } from 'react';
-import actions from '../actions/actions';
+import actions from '../actions/fetchActions';
 import fetchReducer from '../reducers/fetchReducer';
 
 const initialState = {

@@ -1,24 +1,30 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useReducer } from 'react';
 import { Button, FlatList, StyleSheet, Text, View } from 'react-native';
+import { paletteActions } from '../actions/paletteActions';
 import PalettePreview from '../components/PalettePreview';
 import useFetch from '../hooks/useFetch';
 import useFetch_withReducer from '../hooks/useFetch_withReducer';
+import useUndoReducer from '../hooks/useUndoReducer';
+import paletteReducer from '../reducers/paletteReducer';
 
 const Home = ({ navigation, route }) => {
   const newPalette = route.params ? route.params.newPalette : undefined;
 
-  const [palettes, setPalettes] = useState([]);
+  const [palettes, dispatch, hasPast, hasFuture] = useUndoReducer(
+    paletteReducer,
+    [],
+  );
   const [data, isLoading, error, refresh] = useFetch('/api/palettes');
   // alternatively: via custom hook with reducer
   // const [palettes, isLoading, error, refresh] = useFetch_withReducer('/api/palettes');
 
   useEffect(() => {
-    setPalettes(data);
+    dispatch({ type: paletteActions.ADD, payload: { data } });
   }, [data]);
 
   useEffect(() => {
     if (newPalette) {
-      setPalettes((palletes) => [newPalette, ...palletes]);
+      dispatch({ type: paletteActions.ADD, payload: { data: [newPalette] } });
     }
   }, [newPalette]);
 

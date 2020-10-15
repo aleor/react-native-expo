@@ -1,4 +1,4 @@
-import actions from '../actions/actions';
+import actions from '../actions/fetchActions';
 
 const fetchReducer = (state, action) => {
   if (action.type === actions.LOADING) {
