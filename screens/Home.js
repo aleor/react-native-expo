@@ -20,6 +20,7 @@ const Home = ({ navigation, route }) => {
   // const [data, isLoading, error, refresh] = useFetch_withReducer('/api/palettes');
 
   useEffect(() => {
+    dispatch({ type: paletteActions.RESET });
     dispatch({ type: paletteActions.ADD, payload: { data } });
   }, [data]);
 
