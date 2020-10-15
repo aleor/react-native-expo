@@ -1,5 +1,6 @@
-import React, { useEffect, useState, useReducer } from 'react';
+import React, { useEffect } from 'react';
 import { Button, FlatList, StyleSheet, Text, View } from 'react-native';
+import { flowActions } from '../actions/flowActions';
 import { paletteActions } from '../actions/paletteActions';
 import PalettePreview from '../components/PalettePreview';
 import useFetch from '../hooks/useFetch';
@@ -10,13 +11,13 @@ import paletteReducer from '../reducers/paletteReducer';
 const Home = ({ navigation, route }) => {
   const newPalette = route.params ? route.params.newPalette : undefined;
 
-  const [palettes, dispatch, hasPast, hasFuture] = useUndoReducer(
+  const [palettes, dispatch, canGoPast, canGoFuture] = useUndoReducer(
     paletteReducer,
     [],
   );
   const [data, isLoading, error, refresh] = useFetch('/api/palettes');
   // alternatively: via custom hook with reducer
-  // const [palettes, isLoading, error, refresh] = useFetch_withReducer('/api/palettes');
+  // const [data, isLoading, error, refresh] = useFetch_withReducer('/api/palettes');
 
   useEffect(() => {
     dispatch({ type: paletteActions.ADD, payload: { data } });
@@ -56,6 +57,30 @@ const Home = ({ navigation, route }) => {
           </View>
         )
       }
+      ListFooterComponent={
+        isLoading ? (
+          <></>
+        ) : (
+          <View style={styles.listFooter}>
+            {canGoPast() ? (
+              <Button
+                title="Undo"
+                onPress={() => dispatch({ type: flowActions.UNDO })}
+              />
+            ) : (
+              <></>
+            )}
+            {canGoFuture() ? (
+              <Button
+                title="Redo"
+                onPress={() => dispatch({ type: flowActions.REDO })}
+              />
+            ) : (
+              <></>
+            )}
+          </View>
+        )
+      }
     />
   );
 };
@@ -64,6 +89,11 @@ const styles = StyleSheet.create({
   list: {
     padding: 10,
     backgroundColor: 'white',
+  },
+  listFooter: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingBottom: 30,
   },
 });
 

@@ -2,13 +2,13 @@ import { useReducer } from 'react';
 import { flowActions } from '../actions/flowActions';
 
 const useUndoReducer = (reducer, initialState) => {
-  const undoState = {
+  const defaultState = {
     past: [],
     present: initialState,
     future: [],
   };
 
-  const undoReducer = (state = [], action) => {
+  const undoReducer = (state, action) => {
     const newPresent = reducer(state.present, action);
 
     if (action.type == flowActions.UNDO) {
@@ -38,14 +38,11 @@ const useUndoReducer = (reducer, initialState) => {
     };
   };
 
-  const hasPast = !!undoState.past.length;
-  const hasFuture = !!undoState.future.length;
+  const [state, dispatch] = useReducer(undoReducer, defaultState);
+  const canGoPast = () => !!state.past.length;
+  const canGoFuture = () => !!state.future.length;
 
-  const [state, dispatch] = useReducer(undoReducer, undoState);
-
-  return [state.present, dispatch];
-
-  // return [useReducer(undoReducer, undoState), hasPast, hasFuture];
+  return [state.present, dispatch, canGoPast, canGoFuture];
 };
 
 export default useUndoReducer;
